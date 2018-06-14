@@ -5,12 +5,12 @@ I don't care if it works on your laptop! We can't ship your laptop!
 Don't worry if it doesn't work right. If everything did, you would be out of a job.
 I invented the term 'Object-Oriented', and I can tell you I did not have C++ in mind.
 A programming language is low level when its programs require attention to the irrelevant.
-When someone says: 'I want a programming language that has only what I need', give him a lollipop.
 FORTRAN is not a flower but a weed: it is hardy, occasionally blooms, and grows in every computer.
+When someone says: 'I want a programming language that has only what I need', give him a lollipop.
 When the program requires attention to the irrelevant details, then whe have a low level language. 
 The use of COBOL cripples the mind; its teaching should therefore be regarded as a criminal offense.
-The trouble with programmers is that you can never tell what a programmer is doing until it's too late.
 Measuring programming progress by lines of code is like measuring aircraft building progress by weight.
+The trouble with programmers is that you can never tell what a programmer is doing until it's too late.
 Python's a drop-in replacement for BASIC in the sense that Optimus Prime is a drop-in replacement for a truck.
 Always code as if the guy who ends up maintaining your code will be a violent psychopath who knows where you live.
 Most of you are familiar with the virtues of a programmer. There are three, of course: laziness, impatience, and hubris.

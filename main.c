@@ -187,6 +187,9 @@ void bubbleSort(char** array, uint lineCount) {
             if(strlen(*(array + j)) > strlen(*(array + (j + 1)))) {
                 // If left element is greater than right element, swap position
                 swap(&*(array + j), &*(array + (j + 1)));
+            }else if(strlen(*(array + j)) == strlen(*(array + (j + 1))) && strcmp(*(array + j), *(array + (j + 1))) > 0) {
+                // If left element is greater than right element, swap position
+                swap(&*(array + j), &*(array + (j + 1)));
             }
         }
     }
