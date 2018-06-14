@@ -14,6 +14,7 @@
 // Define constant for max size and declare new data type
 const unsigned int MAX_SIZE = 100;
 typedef unsigned int uint;
+static int i = 0;
 
 // This function will be used to swap "pointers".
 void swap(char** , char** );
@@ -95,31 +96,48 @@ void swap(char **pointer1, char **pointer2) {
 void read_in(char** array, uint* lineCount) {
     // Create and initialize needed variables
     FILE *file = fopen("quotes.txt", "r"); // Create a file stream and read in the "quotes.txt" file
-    char line[MAX_SIZE][250]; // Create an array of chars that will hold MAX_Size characters ( max to allow for long strings)
-    int i = 0; // Loop counter
+    char line[MAX_SIZE][256]; // Create an array of chars that will hold MAX_Size characters (max to allow for long strings)
+    
+    // Check if the file cannot be opened
+    if(file == NULL) {
+        // Print an error message
+        printf("Cannot open quotes.txt!\n");
+
+        // Exit with an error message
+        exit(1);
+    }
     
     // Loop through each non NULL line if the file
-    while(fgets(line[i], 250, file) != NULL) {
+    while(fgets(*(line + i), 250, file) != NULL) {
+        // Check if trying to add more then allowed to be stored in array (MAX_SIZE)
+        if(i > MAX_SIZE) {
+            // Print warning message
+            printf("You have reached your alloted amount of string to read in. (%u). Program will continue without reading in more strings.\n", MAX_SIZE);
+            
+            // Break out of the loop
+            break;
+        }
+        
         // Check to see if line start with \n or \r -- if true, continue onto next loop iteration (line)
-        if(line[i][0] == '\n' || line[i][0] == '\r') { continue; }
+        if(*(line[i] + 0) == '\n' || *(line[i] + 0) == '\r') { continue; }
         
         // Set any \r or \n to 0
-        line[i][strcspn(line[i], "\r\n")] = 0;
+        *(line[i] + (strcspn(*(line + i), "\r\n"))) = 0;
         
         // Allocate enough space for the string to be store in the correct array location
-        array[i] = (char *)malloc((strlen(line[i]) + 1) * sizeof(char));
+        *(array + i) = (char *)malloc((strlen(*(line + i)) + 1) * sizeof(char));
         
         // Check if the allocated memory array is NULL
-        if (array[i] == NULL) {
+        if (*(array + i) == NULL) {
             // Print an error message
-            printf("Cannot allocate memory for %d-th row!\n", i+1);
+            printf("Cannot allocate memory for %d string!\n", (i + 1));
             
             // Exit with an error message
             exit(1);
         }
         
         // Copy the string into the allocated memory array taking into account the null character
-        strncpy(array[i], line[i], (strlen(line[i]) + 1));
+        strncpy(*(array + i), *(line + i), (strlen(*(line + i)) + 1));
         
         // Increment the line counter
         i++;
@@ -142,9 +160,9 @@ void read_in(char** array, uint* lineCount) {
  */
 void print_out(char** array, uint lineCount) {
     // Loop through each line (array element)
-    for(int i = 0; i < lineCount; i++) {
+    for(i = 0; i < lineCount; i++) {
         // Print element to console
-        printf("%s\n", array[i]);
+        printf("%s\n", *(array + i));
     }
 }
 
@@ -162,13 +180,13 @@ void print_out(char** array, uint lineCount) {
  */
 void bubbleSort(char** array, uint lineCount) {
     // Loop through the loop as many times are there are array elements
-    for(int i = lineCount; i > 0; i--) {
+    for(i = lineCount; i > 0; i--) {
         // Loop through every array element
         for(int j = 0; j < (i - 1); j++) {
             // Compare the length of the first element to the second based on if its greater than
-            if(strlen(array[j]) > strlen(array[(j + 1)])) {
+            if(strlen(*(array + j)) > strlen(*(array + (j + 1)))) {
                 // If left element is greater than right element, swap position
-                swap(&array[j], &array[(j + 1)]);
+                swap(&*(array + j), &*(array + (j + 1)));
             }
         }
     }
@@ -187,9 +205,9 @@ void write_out(char** array, uint lineCount) {
     FILE *output = fopen("output.txt", "w");
     
     // Loop through each array element
-    for(int i = 0; i < lineCount; i++) {
+    for(i = 0; i < lineCount; i++) {
         // Print the data to the file
-        fputs(array[i], output);
+        fputs(*(array + i), output);
         
         // Prints new line to the file
         fputs("\n", output);
@@ -206,8 +224,8 @@ void write_out(char** array, uint lineCount) {
  */
 void free_memory(char** array, uint lineCount) {
     // Loop through each array element
-    for(int i = 0; i < lineCount; i++) {
+    for(i = 0; i < lineCount; i++) {
         // Free the array element
-        free(array[i]);
+        free(*(array + i));
     }
 }
