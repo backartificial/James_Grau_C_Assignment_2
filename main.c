@@ -101,10 +101,10 @@ void read_in(char** array, uint* lineCount) {
     // Check if the file cannot be opened
     if(file == NULL) {
         // Print an error message
-        printf("Cannot open quotes.txt!\n");
+        printf("Cannot open quotes.txt.\n");
 
         // Exit with an error message
-        exit(1);
+        exit(-1);
     }
     
     // Loop through each non NULL line if the file
@@ -144,7 +144,7 @@ void read_in(char** array, uint* lineCount) {
     }
     
     // Try and close the error -- print error message on error
-    if (fclose(file)) { printf("Error closing \"quotes.txt\" file.\n"); }
+    if (fclose(file)) { printf("Error closing quotes.txt file.\n"); }
     
     // Set the lineCount value to the value of i (casted as uint)
     *lineCount = (uint) i;
@@ -207,6 +207,15 @@ void write_out(char** array, uint lineCount) {
     // Create a file stream and assign it to a file to write to
     FILE *output = fopen("output.txt", "w");
     
+    // Check if the file was able to be opened
+    if(output == NULL) {
+        // Print error
+        printf("Oops... output.txt failed to open with write access.");
+        
+        // Exit application
+        exit(-1);
+    }
+    
     // Loop through each array element
     for(i = 0; i < lineCount; i++) {
         // Print the data to the file
@@ -215,6 +224,9 @@ void write_out(char** array, uint lineCount) {
         // Prints new line to the file
         fputs("\n", output);
     }
+        
+    // Try and close the error -- print error message on error
+    if (fclose(output)) { printf("Error closing output.txt file.\n"); }
 }
 
 /**
